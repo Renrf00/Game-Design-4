@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,7 +8,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private bool UseMouse = false;
-    [SerializeField] private float deceleration;
+    [SerializeField] private float constantDeceleration;
+    [SerializeField] private float aimingDeceleration;
     [SerializeField] private float impulseSpeed;
     private Vector3 direction = Vector3.zero;
 
@@ -40,14 +42,16 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(dashKey))
             {
-                rb.linearVelocity = Vector3.zero;
                 mouseStartPosition = Input.mousePosition;
             }
 
             if (Input.GetKey(dashKey))
             {
+                Decelerate(aimingDeceleration);
                 GetDirection(mouseStartPosition);
             }
+            else
+                Decelerate(constantDeceleration);
 
             if (Input.GetKeyUp(dashKey))
             {
@@ -56,10 +60,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(dashKey))
-            {
-                rb.linearVelocity = Vector3.zero;
-            }
+            if (Input.GetKey(dashKey))
+                Decelerate(aimingDeceleration);
+            else
+                Decelerate(constantDeceleration);
 
             if (Input.GetKeyUp(dashKey))
             {
@@ -79,7 +83,7 @@ public class PlayerController : MonoBehaviour
     }
     private void GetDirection()
     {
-        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        direction = new Vector3(-Input.GetAxisRaw("Horizontal"), 0, -Input.GetAxisRaw("Vertical")).normalized;
     }
     private void GetDirection(Vector2 mouseStartPosition)
     {
@@ -98,8 +102,15 @@ public class PlayerController : MonoBehaviour
         direction = new Vector3(tempDirection.x, 0, tempDirection.y);
     }
 
-    private void Decelerate()
+    private void Decelerate(float deceleration)
     {
-
+        // if (deceleration >= rb.linearVelocity.magnitude)
+        // {
+        //     rb.linearVelocity = Vector3.zero;
+        // }
+        // else
+        // {
+        rb.linearVelocity -= rb.linearVelocity * deceleration;
+        // }
     }
 }
