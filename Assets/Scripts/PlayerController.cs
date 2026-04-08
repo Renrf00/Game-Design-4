@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     private Rigidbody rb;
+    [SerializeField] private RectTransform Rotator;
 
     [Header("Movement")]
     [SerializeField] private bool UseMouse = false;
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();     
 
         if (UseMouse)
         {
@@ -56,19 +57,23 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyUp(dashKey))
             {
                 dashing = true;
+                Rotator.gameObject.SetActive(false);
             }
         }
         else
         {
             if (Input.GetKey(dashKey))
+            {
                 Decelerate(aimingDeceleration);
+                GetDirection();
+            }
             else
                 Decelerate(constantDeceleration);
 
             if (Input.GetKeyUp(dashKey))
             {
-                GetDirection();
                 dashing = true;
+                Rotator.gameObject.SetActive(false);
             }
         }
     }
@@ -100,6 +105,12 @@ public class PlayerController : MonoBehaviour
         }
 
         direction = new Vector3(tempDirection.x, 0, tempDirection.y);
+
+        Rotator.position = transform.position;
+        Vector3 rotation = new Vector3(0, angle * 180 /Mathf.PI + 135, 0);        
+        Rotator.localEulerAngles = -rotation;
+        Rotator.gameObject.SetActive(true);
+
     }
 
     private void Decelerate(float deceleration)
