@@ -1,0 +1,105 @@
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    [Header("References")]
+    private Rigidbody rb;
+
+    [Header("Movement")]
+    [SerializeField] private bool UseMouse = false;
+    [SerializeField] private float deceleration;
+    [SerializeField] private float impulseSpeed;
+    private Vector3 direction = Vector3.zero;
+
+    [Header("Input")]
+    [SerializeField] private KeyCode keyboardDashKey = KeyCode.LeftShift;
+    [SerializeField] private KeyCode mouseDashKey = KeyCode.Mouse0;
+    private Vector2 mouseStartPosition = Vector2.zero;
+
+    private KeyCode dashKey;
+    private bool dashing;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+
+        if (UseMouse)
+        {
+            dashKey = mouseDashKey;
+        }
+        else
+        {
+            dashKey = keyboardDashKey;
+        }
+    }
+
+    private void Update()
+    {
+        if (UseMouse)
+        {
+
+            if (Input.GetKeyDown(dashKey))
+            {
+                rb.linearVelocity = Vector3.zero;
+                mouseStartPosition = Input.mousePosition;
+            }
+
+            if (Input.GetKey(dashKey))
+            {
+                GetDirection(mouseStartPosition);
+            }
+
+            if (Input.GetKeyUp(dashKey))
+            {
+                dashing = true;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(dashKey))
+            {
+                rb.linearVelocity = Vector3.zero;
+            }
+
+            if (Input.GetKeyUp(dashKey))
+            {
+                GetDirection();
+                dashing = true;
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (dashing)
+        {
+            rb.AddForce(direction * impulseSpeed, ForceMode.VelocityChange);
+            dashing = false;
+        }
+    }
+    private void GetDirection()
+    {
+        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+    }
+    private void GetDirection(Vector2 mouseStartPosition)
+    {
+        Vector2 mouseCurrentPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        Vector2 tempDirection = (mouseStartPosition - mouseCurrentPosition).normalized;
+
+        float angle = Mathf.Atan2(tempDirection.y, tempDirection.x);
+
+        if (angle % (Mathf.PI / 4) != 0)
+        {
+            angle = Mathf.Round(angle / (Mathf.PI / 4)) * (Mathf.PI / 4) - (Mathf.PI / 4);
+            tempDirection = new Vector2(Mathf.Cos(angle) - Mathf.Sin(angle), Mathf.Sin(angle) + Mathf.Cos(angle));
+        }
+
+        direction = new Vector3(tempDirection.x, 0, tempDirection.y);
+    }
+
+    private void Decelerate()
+    {
+
+    }
+}
