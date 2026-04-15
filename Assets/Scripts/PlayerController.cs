@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(dashKey))
             {
-                mouseStartPosition = Input.mousePosition;
+                mouseStartPosition = Camera.main.WorldToScreenPoint(transform.position);
             }
 
             if (Input.GetKey(dashKey))
@@ -115,10 +115,10 @@ public class PlayerController : MonoBehaviour
             tempDirection = new Vector2(Mathf.Cos(angle) - Mathf.Sin(angle), Mathf.Sin(angle) + Mathf.Cos(angle));
         }
 
-        direction = new Vector3(tempDirection.x, 0, tempDirection.y).normalized;
+        direction = new Vector3(-tempDirection.x, 0, -tempDirection.y).normalized;
 
         Rotator.position = transform.position;
-        Vector3 rotation = new Vector3(0, angle * 180 / Mathf.PI + 135, 0);
+        Vector3 rotation = new Vector3(0, angle * 180 / Mathf.PI - 45, 0);
         Rotator.localEulerAngles = -rotation;
         Rotator.gameObject.SetActive(true);
 
