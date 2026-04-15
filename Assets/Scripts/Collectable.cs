@@ -10,6 +10,7 @@ public class Collectable : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            OnPickUp.Invoke();
             PowerUp(other.gameObject);
             Destroy(gameObject);
         }
@@ -18,5 +19,6 @@ public class Collectable : MonoBehaviour
     public void PowerUp(GameObject player)
     {
         player.transform.localScale *= sizeIncrease;
+        player.gameObject.GetComponent<PlayerController>().canDestroy = true;
     }
 }

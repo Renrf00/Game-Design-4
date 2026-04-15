@@ -19,12 +19,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private KeyCode mouseDashKey = KeyCode.Mouse0;
     private Vector2 mouseStartPosition = Vector2.zero;
 
+    [HideInInspector] public bool canDestroy = false;
+
     private KeyCode dashKey;
     private bool dashing;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();     
+        rb = GetComponent<Rigidbody>();
 
         if (UseMouse)
         {
@@ -88,16 +90,16 @@ public class PlayerController : MonoBehaviour
     }
     private void GetDirection()
     {
-        direction = new Vector3(-Input.GetAxisRaw("Horizontal"), 0, -Input.GetAxisRaw("Vertical")).normalized;
+        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
-        float angle = Mathf.Atan2(direction.z, direction.x);        
+        float angle = Mathf.Atan2(direction.z, direction.x);
         Rotator.position = transform.position;
         Vector3 rotation = new Vector3(0, angle * 180 / Mathf.PI + 90, 0);
         Rotator.localEulerAngles = -rotation;
-        
-        if (direction.x != 0 || direction.z != 0) Rotator.gameObject.SetActive(true);                           
+
+        if (direction.x != 0 || direction.z != 0) Rotator.gameObject.SetActive(true);
         else Rotator.gameObject.SetActive(false);
-        
+
     }
     private void GetDirection(Vector2 mouseStartPosition)
     {
@@ -116,7 +118,7 @@ public class PlayerController : MonoBehaviour
         direction = new Vector3(tempDirection.x, 0, tempDirection.y).normalized;
 
         Rotator.position = transform.position;
-        Vector3 rotation = new Vector3(0, angle * 180 /Mathf.PI + 135, 0);        
+        Vector3 rotation = new Vector3(0, angle * 180 / Mathf.PI + 135, 0);
         Rotator.localEulerAngles = -rotation;
         Rotator.gameObject.SetActive(true);
 
@@ -124,19 +126,12 @@ public class PlayerController : MonoBehaviour
 
     private void Decelerate(float deceleration)
     {
-        // if (deceleration >= rb.linearVelocity.magnitude)
-        // {
-        //     rb.linearVelocity = Vector3.zero;
-        // }
-        // else
-        // {
         rb.linearVelocity -= rb.linearVelocity * deceleration;
-        // }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (false)
+        if (canDestroy)
         {
             if (collision.transform.GetComponent<PlayerController>() != null)
             {
