@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    
+    [SerializeField] private TMP_Text ScoreText;
+
     [SerializeField] private string MenuScene;
     [SerializeField] private string playingScene;
 
@@ -14,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int Player1 = 0;
     // Mouse player
     [SerializeField] private int Player2 = 0;
+
 
     private void Awake()
     {
@@ -32,7 +36,9 @@ public class GameManager : MonoBehaviour
     public void NextRound(bool player1Win)
     {
         Player1 += player1Win ? 1 : 0;
-        Player1 += player1Win ? 0 : 1;
+        Player2 += player1Win ? 0 : 1;
+
+        UpdateScore();
 
         if (Player1 >= bestOf || Player2 >= bestOf)
         {
@@ -41,6 +47,11 @@ public class GameManager : MonoBehaviour
         else
             SceneManager.LoadScene(playingScene);
     }
+
+    private void UpdateScore()
+    {
+        ScoreText.text = "Keyboard: " + Player1 + " | Mouse: " + Player2;
+    } 
 
     public void RestartGame()
     {
