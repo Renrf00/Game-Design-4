@@ -89,6 +89,15 @@ public class PlayerController : MonoBehaviour
     private void GetDirection()
     {
         direction = new Vector3(-Input.GetAxisRaw("Horizontal"), 0, -Input.GetAxisRaw("Vertical")).normalized;
+
+        float angle = Mathf.Atan2(direction.z, direction.x);        
+        Rotator.position = transform.position;
+        Vector3 rotation = new Vector3(0, angle * 180 / Mathf.PI + 90, 0);
+        Rotator.localEulerAngles = -rotation;
+        
+        if (direction.x != 0 || direction.z != 0) Rotator.gameObject.SetActive(true);                           
+        else Rotator.gameObject.SetActive(false);
+        
     }
     private void GetDirection(Vector2 mouseStartPosition)
     {
