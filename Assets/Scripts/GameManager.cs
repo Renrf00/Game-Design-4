@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    
+
     [SerializeField] private TMP_Text ScoreText;
+
 
     [SerializeField] private string MenuScene;
     [SerializeField] private string playingScene;
@@ -26,14 +27,14 @@ public class GameManager : MonoBehaviour
 
         if (instance == null)
             instance = this;
-        else 
+        else
             Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
-        ScoreText = GameObject.Find("Score").GetComponent<TMP_Text>();
+        // ScoreText = GameObject.Find("Score").GetComponent<TMP_Text>();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
     private void UpdateScore()
     {
         ScoreText.text = "Keyboard: " + Player1 + " | Mouse: " + Player2;
-    } 
+    }
 
     public void RestartGame()
     {

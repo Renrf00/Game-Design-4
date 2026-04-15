@@ -362,17 +362,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4381e189a768b42e883e922ac0dac9bb, type: 3}
---- !u!114 &940707005 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5109681157841516104, guid: 4381e189a768b42e883e922ac0dac9bb, type: 3}
-  m_PrefabInstance: {fileID: 940707004}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac9ee7287d7604f118d062cc827a610f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &969598954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,6 +997,7 @@ GameObject:
   - component: {fileID: 2051708983}
   - component: {fileID: 2051708982}
   - component: {fileID: 2051708981}
+  - component: {fileID: 2051708984}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -1079,9 +1069,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 940707005}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: RestartGame
+      - m_Target: {fileID: 2051708984}
+        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1129,6 +1119,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2051708979}
   m_CullTransparentMesh: 1
+--- !u!114 &2051708984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051708979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53dfcaf2ec8934c709f3044cd354dada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
