@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
             tempDirection = new Vector2(Mathf.Cos(angle) - Mathf.Sin(angle), Mathf.Sin(angle) + Mathf.Cos(angle));
         }
 
-        direction = new Vector3(tempDirection.x, 0, tempDirection.y);
+        direction = new Vector3(tempDirection.x, 0, tempDirection.y).normalized;
 
         Rotator.position = transform.position;
         Vector3 rotation = new Vector3(0, angle * 180 /Mathf.PI + 135, 0);        
@@ -132,5 +132,16 @@ public class PlayerController : MonoBehaviour
         // {
         rb.linearVelocity -= rb.linearVelocity * deceleration;
         // }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (false)
+        {
+            if (collision.transform.GetComponent<PlayerController>() != null)
+            {
+                Destroy(collision.gameObject);
+            }
+        }
     }
 }
