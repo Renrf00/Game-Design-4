@@ -99520,6 +99520,10 @@ PrefabInstance:
       propertyPath: impulseSpeed
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 425997703119946738, guid: 211cc6ef33b8c4feaaf51db45adc5fac, type: 3}
+      propertyPath: keyboardDashKey
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 2347304275423916967, guid: 211cc6ef33b8c4feaaf51db45adc5fac, type: 3}
       propertyPath: m_Name
       value: Player WASD

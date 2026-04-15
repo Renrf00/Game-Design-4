@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdateScore()
     {
-        ScoreText.text = "Keyboard: " + Player1 + " | Mouse: " + Player2;
+        ScoreText.text = "Keyboard: " + Player1 + "/" + bestOf + " | Mouse: " + Player2 + "/" + bestOf;
     }
 
     public void RestartGame()
