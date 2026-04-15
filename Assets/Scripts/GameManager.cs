@@ -28,11 +28,12 @@ public class GameManager : MonoBehaviour
             instance = this;
         else 
             Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);        
     }
 
     private void Start()
     {
+        ScoreText = GameObject.Find("Score").GetComponent<TMP_Text>();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -65,6 +66,8 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("Called");
+
         if (SceneManager.GetActiveScene().name == MenuScene)
         {
             TMP_Text text = GameObject.Find("WinText").GetComponent<TMP_Text>();
@@ -74,6 +77,11 @@ public class GameManager : MonoBehaviour
                 text.text = "Mouse wins!!";
             else
                 text.text = "";
+        }
+        else if (SceneManager.GetActiveScene().name == playingScene)
+        {
+            ScoreText = GameObject.Find("Score").GetComponent<TMP_Text>();
+            UpdateScore();
         }
     }
 }

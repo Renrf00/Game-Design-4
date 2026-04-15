@@ -136,10 +136,10 @@ public class PlayerController : MonoBehaviour
             if (collision.transform.GetComponent<PlayerController>() != null)
             {
                 Destroy(collision.gameObject);
-                //if (UseMouse)
-                //    GameManager.instance.NextRound(false);
-                //else
-                //    GameManager.instance.NextRound(true);
+                if (UseMouse)
+                    GameManager.instance.NextRound(false);
+                else
+                    GameManager.instance.NextRound(true);
             }
         }
     }

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -28,10 +29,10 @@ public class Fighting : MonoBehaviour
             transform.DOScaleX(transform.localScale.x - transform.localScale.x / shrinkAmount, 1).SetEase(Ease);
             transform.DOScaleZ(transform.localScale.x - transform.localScale.x / shrinkAmount, 1).SetEase(Ease);
         }
-        //if (player1.transform.localScale.x > 3)
-        //    GameManager.instance.NextRound(false);
-        //else
-        //    GameManager.instance.NextRound(true);
+        if (player1.transform.localScale.x > 3)
+            GameManager.instance.NextRound(false);
+        else
+            GameManager.instance.NextRound(true);
         
     }
 }
