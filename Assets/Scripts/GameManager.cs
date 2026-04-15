@@ -1,12 +1,12 @@
-using DG.Tweening;
-using Unity.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameObject instance;
-    [SerializeField] private Scene winingScene;
+    public static GameManager instance;
+    [SerializeField] private string MenuScene;
+    [SerializeField] private string playingScene;
 
     [SerializeField] private int bestOf = 5;
 
@@ -20,8 +20,13 @@ public class GameManager : MonoBehaviour
         if (instance != null)
             Destroy(gameObject);
 
-        instance = gameObject;
+        instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void NextRound(bool player1Win)
@@ -30,14 +35,31 @@ public class GameManager : MonoBehaviour
         Player1 += player1Win ? 0 : 1;
 
         if (Player1 >= bestOf || Player2 >= bestOf)
-            SceneManager.LoadScene(winingScene.name);
+        {
+            SceneManager.LoadScene(MenuScene);
+        }
         else
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(playingScene);
     }
 
     public void RestartGame()
     {
         Player1 = 0;
         Player2 = 0;
+        SceneManager.LoadScene(playingScene);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (SceneManager.GetActiveScene().name == MenuScene)
+        {
+            TMP_Text text = GameObject.Find("WinText").GetComponent<TMP_Text>();
+            if (Player1 >= bestOf)
+                text.text = "Keyboard wins!!";
+            else if (Player2 >= bestOf)
+                text.text = "Mouse wins!!";
+            else
+                text.text = "";
+        }
     }
 }

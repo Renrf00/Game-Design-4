@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9ee7287d7604f118d062cc827a610f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winingScene:
-    m_Handle: 0
+  winingScene: MenuScene
+  playingScene: MakingMazeScene
   bestOf: 5
   Player1: 0
   Player2: 0
